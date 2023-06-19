@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="SqlServer" id="Project-10b3" database="SqlServer" >
+	<schema name="dbo" catalogname="Fintech" >
+		<table name="Account" row_count="0" spec="" >
+			<column name="IDAccount" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY]]></identity>
+			</column>
+			<column name="IDCustomer" type="int" jt="4" mandatory="y" />
+			<column name="AccountNumber" type="int" jt="4" mandatory="y" />
+			<column name="Amount" type="decimal" length="18" decimal="4" jt="3" />
+			<column name="RegisterDate" type="datetime" jt="92" mandatory="y" />
+			<column name="Active" type="bit" jt="-7" mandatory="y" />
+			<index name="PK__Account__1D323F900205CEE7" unique="PRIMARY_KEY" spec=" CLUSTERED" >
+				<column name="IDAccount" options=" asc" />
+			</index>
+			<index name="UQ__Account__BE2ACD6F66CD9D45" unique="UNIQUE_KEY" spec=" NONCLUSTERED" >
+				<column name="AccountNumber" options=" asc" />
+			</index>
+			<index name="UQ__Account__701C9C3D295AAAF0" unique="UNIQUE_KEY" spec=" NONCLUSTERED" >
+				<column name="IDCustomer" options=" asc" />
+			</index>
+			<fk name="FK_Account_Customer" to_schema="Fintech.dbo" to_table="Customer" options="" >
+				<fk_column name="IDCustomer" pk="IDCustomer" />
+			</fk>
+		</table>
+		<table name="AccountTransaction" row_count="0" spec="" >
+			<column name="IDAccountTransaction" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY]]></identity>
+			</column>
+			<column name="IDAccount" type="int" jt="4" mandatory="y" />
+			<column name="TransactionValue" type="decimal" length="18" decimal="4" jt="3" mandatory="y" />
+			<column name="TransactionType" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="RegisterDate" type="datetime" jt="92" mandatory="y" />
+			<column name="Active" type="bit" jt="-7" mandatory="y" />
+			<index name="PK__AccountT__2D2FB2C0148C39FA" unique="PRIMARY_KEY" spec=" CLUSTERED" >
+				<column name="IDAccountTransaction" options=" asc" />
+			</index>
+			<fk name="FK_AccountTransaction_Account" to_schema="Fintech.dbo" to_table="Account" options="" >
+				<fk_column name="IDAccount" pk="IDAccount" />
+			</fk>
+		</table>
+		<table name="Address" row_count="0" spec="" >
+			<column name="IDAddress" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY]]></identity>
+			</column>
+			<column name="IDCustomer" type="int" jt="4" mandatory="y" />
+			<column name="AddressType" type="varchar" length="50" jt="12" />
+			<column name="CEP" type="varchar" length="8" jt="12" mandatory="y" />
+			<column name="Street" type="varchar" length="300" jt="12" mandatory="y" />
+			<column name="City" type="varchar" length="80" jt="12" />
+			<column name="State" type="varchar" length="80" jt="12" />
+			<column name="RegisterDate" type="datetime" jt="92" mandatory="y" />
+			<column name="Active" type="bit" jt="-7" mandatory="y" />
+			<index name="PK__Address__F31F10A0B4C0FEC5" unique="PRIMARY_KEY" spec=" CLUSTERED" >
+				<column name="IDAddress" options=" asc" />
+			</index>
+			<fk name="FK_Address_Customer" to_schema="Fintech.dbo" to_table="Customer" options="" >
+				<fk_column name="IDCustomer" pk="IDCustomer" />
+			</fk>
+		</table>
+		<table name="Customer" row_count="0" spec="" >
+			<column name="IDCustomer" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY]]></identity>
+			</column>
+			<column name="CustomerName" type="varchar" length="150" jt="12" mandatory="y" />
+			<column name="Document" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="BornDate" type="date" jt="91" />
+			<column name="RegisterDate" type="datetime" jt="92" mandatory="y" />
+			<column name="Active" type="bit" jt="-7" mandatory="y" />
+			<index name="PK__Customer__701C9C3C907743C3" unique="PRIMARY_KEY" spec=" CLUSTERED" >
+				<column name="IDCustomer" options=" asc" />
+			</index>
+			<index name="UQ__Customer__6FB5C41878907769" unique="UNIQUE_KEY" spec=" NONCLUSTERED" >
+				<column name="Document" options=" asc" />
+			</index>
+		</table>
+		<table name="Investment" row_count="0" spec="" >
+			<column name="IDInvestment" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY]]></identity>
+			</column>
+			<column name="InvestmentName" type="varchar" length="80" jt="12" mandatory="y" />
+			<column name="InvestmentDescription" type="varchar" length="300" jt="12" />
+			<column name="Tax" type="decimal" length="18" decimal="4" jt="3" />
+			<column name="RegisterDate" type="datetime" jt="92" mandatory="y" />
+			<column name="Active" type="bit" jt="-7" mandatory="y" />
+			<index name="PK__Investme__C67F3BF00A527920" unique="PRIMARY_KEY" spec=" CLUSTERED" >
+				<column name="IDInvestment" options=" asc" />
+			</index>
+			<index name="UQ__Investme__06B468178092F5B3" unique="UNIQUE_KEY" spec=" NONCLUSTERED" >
+				<column name="InvestmentName" options=" asc" />
+			</index>
+		</table>
+		<table name="InvestmentAcquisition" row_count="0" spec="" >
+			<column name="IDInvestmentAcquisition" type="int" jt="4" mandatory="y" >
+				<identity><![CDATA[IDENTITY]]></identity>
+			</column>
+			<column name="IDInvestment" type="int" jt="4" mandatory="y" />
+			<column name="IDAccount" type="int" jt="4" mandatory="y" />
+			<column name="InvestmentAmount" type="decimal" length="18" decimal="4" jt="3" mandatory="y" />
+			<column name="ValidateDate" type="datetime" jt="92" mandatory="y" />
+			<column name="RegisterDate" type="datetime" jt="92" mandatory="y" />
+			<column name="Active" type="bit" jt="-7" mandatory="y" />
+			<index name="PK__Investme__93A0DA3AC39D6696" unique="PRIMARY_KEY" spec=" CLUSTERED" >
+				<column name="IDInvestmentAcquisition" options=" asc" />
+			</index>
+			<fk name="FK_InvestmentAcquisition_Account" to_schema="Fintech.dbo" to_table="Account" options="" >
+				<fk_column name="IDAccount" pk="IDAccount" />
+			</fk>
+			<fk name="FK_InvestmentAcquisition_Investment" to_schema="Fintech.dbo" to_table="Investment" options="" >
+				<fk_column name="IDInvestment" pk="IDInvestment" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="SqlServer" database="SqlServer" driver_class="com.microsoft.sqlserver.jdbc.SQLServerDriver" driver_jar="mssql-jdbc-12.2.0.jre11.jar" driver_desc="SQL Server Authentication" host="localhost" port="1433" instance="Fintech" user="sa" passwd="ZjdmZjllOGI3YmIyZTA5YjcwOTM1YTVkNzg1ZTBjYzVkOWQwYWJmMA==" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-12e1" show_relation="columns" >
+		<entity schema="Fintech.dbo" name="Account" color="BED3F4" x="80" y="128" />
+		<entity schema="Fintech.dbo" name="AccountTransaction" color="BED3F4" x="48" y="368" />
+		<entity schema="Fintech.dbo" name="Address" color="BED3F4" x="544" y="80" />
+		<entity schema="Fintech.dbo" name="Customer" color="BED3F4" x="320" y="128" />
+		<entity schema="Fintech.dbo" name="Investment" color="BED3F4" x="592" y="368" />
+		<entity schema="Fintech.dbo" name="InvestmentAcquisition" color="BED3F4" x="320" y="368" />
+		<group name="Account" color="ECF0F7" >
+			<entity schema="Fintech.dbo" name="Account" />
+			<entity schema="Fintech.dbo" name="Customer" />
+			<entity schema="Fintech.dbo" name="InvestmentAcquisition" />
+			<entity schema="Fintech.dbo" name="Address" />
+			<entity schema="Fintech.dbo" name="AccountTransaction" />
+			<entity schema="Fintech.dbo" name="Investment" />
+		</group>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-d19" show_column_type="y" show_relation="columns" >
+		<entity schema="Fintech.dbo" name="Account" color="BED3F4" x="96" y="96" />
+		<entity schema="Fintech.dbo" name="AccountTransaction" color="BED3F4" x="48" y="336" />
+		<entity schema="Fintech.dbo" name="Address" color="BED3F4" x="672" y="48" />
+		<entity schema="Fintech.dbo" name="Customer" color="BED3F4" x="368" y="96" />
+		<entity schema="Fintech.dbo" name="Investment" color="BED3F4" x="688" y="336" />
+		<entity schema="Fintech.dbo" name="InvestmentAcquisition" color="BED3F4" x="368" y="336" />
+		<script name="SQL Editor" id="Editor-1404" language="SQL" >
+			<string><![CDATA[SELECT
+	IDAccount, IDCustomer, AccountNumber, Amount, RegisterDate, Active
+FROM
+	Fintech.dbo.Account t;
+GO]]></string>
+		</script>
+		<browser id="Browse-2129" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="Fintech.dbo" entity="Account" x="20" y="20" width="400" height="300" >
+				<browse_table schema="Fintech.dbo" entity="InvestmentAcquisition" fk="FK_InvestmentAcquisition_Account" x="440" y="20" width="500" height="350" >
+					<browse_table schema="Fintech.dbo" entity="Investment" fk="FK_InvestmentAcquisition_Investment" x="960" y="20" width="500" height="350" record_view="y" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="Query-1bf9" name="Query Builder" >
+			<query_table schema="Fintech.dbo" name="Account" alias="a" x="48" y="48" >
+				<column name="IDAccount" />
+				<column name="IDCustomer" />
+				<column name="AccountNumber" />
+				<column name="Amount" />
+				<column name="RegisterDate" />
+				<column name="Active" />
+				<query_table schema="Fintech.dbo" name="InvestmentAcquisition" alias="i" x="288" y="48" fk="FK_InvestmentAcquisition_Account" type="Inner Join" >
+					<column name="IDInvestmentAcquisition" />
+					<column name="IDInvestment" />
+					<column name="IDAccount" />
+					<column name="InvestmentAmount" />
+					<column name="ValidateDate" />
+					<column name="RegisterDate" />
+					<column name="Active" />
+					<query_table schema="Fintech.dbo" name="Investment" alias="i1" x="560" y="48" fk="FK_InvestmentAcquisition_Investment" type="Inner Join" >
+						<column name="IDInvestment" />
+						<column name="InvestmentName" />
+						<column name="InvestmentDescription" />
+						<column name="Tax" />
+						<column name="RegisterDate" />
+						<column name="Active" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Report" id="Report-17a4" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Account Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="IDAccount" type="4" />
+						<var name="IDCustomer" type="4" />
+						<var name="AccountNumber" type="4" />
+						<var name="Amount" type="3" />
+						<var name="RegisterDate" type="92" />
+						<var name="Active" type="-7" />
+						<script ><![CDATA[SELECT * FROM Fintech.dbo.Account]]></script>
+					</form_script>
+					<param name="width" value="100%" />
+					<param name="v0" value="AccountNumber" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="IDAccount" type="4" />
+						<var name="IDCustomer" type="4" />
+						<var name="AccountNumber" type="4" />
+						<var name="Amount" type="3" />
+						<var name="RegisterDate" type="92" />
+						<var name="Active" type="-7" />
+						<script ><![CDATA[SELECT * FROM Fintech.dbo.Account]]></script>
+					</form_script>
+					<cell type="label" name="IDAccount" pos="0,0,0,0,c,c" />
+					<cell type="label" name="IDCustomer" pos="1,0,1,0,c,c" />
+					<cell type="label" name="AccountNumber" pos="2,0,2,0,c,c" />
+					<cell type="label" name="Amount" pos="3,0,3,0,c,c" />
+					<cell type="label" name="RegisterDate" pos="4,0,4,0,c,c" />
+					<cell type="label" name="Active" pos="5,0,5,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="6,0,6,0,c,c" />
+					<cell type="label" name="${IDAccount}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${IDCustomer}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${AccountNumber}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${Amount}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="label" name="${RegisterDate}" template="Plain" pos="4,1,4,1,l,c" />
+					<cell type="label" name="${Active}" template="Plain" pos="5,1,5,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="6,1,6,1,c,c" ref_id="Report-17a4" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-17a4" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-17a4" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-17a4" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>
